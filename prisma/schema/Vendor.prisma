@@ -1,0 +1,318 @@
+enum Vendor {
+  ThreeHundredSixty @map("360")
+  ThreeQ            @map("3Q")
+  FourGood          @map("4Good")
+  Acer
+  Aermoo
+  AGMObile          @map("AG Mobile")
+  AGM
+  Airis
+  Alcatel
+  AllCall
+  Amazon
+  Amigoo
+  Amoi
+  Ampe
+  AnyDATA
+  Apple
+  Archos
+  Arima
+  Ark
+  Artel
+  Assistant
+  Asus
+  Axgio
+  Balmuda
+  Bambook
+  Batl
+  BBK
+  Beidou
+  Benefon
+  BenQ
+  BenQSiemens       @map("BenQ-Siemens")
+  Billion
+  BlackFox          @map("Black Fox")
+  BlackShark        @map("Black Shark")
+  BlackBerry
+  Blackview
+  BLU
+  Bluboo
+  BQ
+  BQMobile          @map("BQ-mobile")
+  Bravis
+  Bylynd
+  Cagabi
+  Casio
+  Caterpillar
+  ChinaMobile       @map("China Mobile")
+  Cingular
+  CloudFone
+  Conquest
+  Coolpad
+  COWON
+  Cube
+  Cubot
+  Dell
+  DEX
+  DEXP
+  Digma
+  DNS
+  Doogee
+  Dopod
+  Eachine
+  Ecoo
+  Effire
+  Elari
+  Elephone
+  Energizer
+  Ergo
+  Essential
+  Estar
+  Etuline
+  Explay
+  F150
+  Fairphone
+  Finepower
+  FireflyMobile     @map("Firefly Mobile")
+  Fly
+  Flycat
+  Fog
+  FPlus             @map("F+")
+  Fujitsu
+  FujitsySiemens    @map("Fujitsu-Siemens")
+  Glofiish          @map("Glofiish (E-Ten)")
+  Garmin
+  GarminAsus        @map("Garmin-Asus")
+  GeeksPhone
+  GeneralMobile     @map("General Mobile")
+  Geotel
+  Getac
+  Gfive
+  Gigabyte
+  Gigaset
+  Ginza
+  Ginzzu
+  Gionee
+  GoClever
+  GOME
+  Google
+  Gresso
+  Gretel
+  Guophone
+  Hafury
+  Haier
+  Hammer
+  Hasee
+  HDC
+  HEDYMobile        @map("HEDY mobile")
+  Highscreen
+  Hisense
+  HKC
+  HOFFMANN
+  HomTom
+  Honor
+  Hotwav
+  HOTWAV
+  HP
+  HTC
+  Huadoo
+  Huawei
+  Hummer
+  Hyundai
+  IMate             @map("I-Mate")
+  IMobile           @map("I-mobile")
+  iconBIT
+  IIIF150
+  iLA
+  iMan
+  Impression
+  iNew
+  Infinix
+  InFocus
+  Innos
+  INOI
+  Intex
+  iOcean
+  Ioutdoor
+  IQM
+  iQOO
+  Irbis
+  iRU
+  iRulu
+  Itel
+  IUNI
+  Jesy
+  Jiake
+  Jiayu
+  Jinga
+  Jolla
+  Just5
+  KTouch            @map("K-Touch")
+  Karbonn
+  Keneksi
+  Kingsing
+  Kingzone
+  Kodak
+  Kolina
+  Koolnee
+  Krome
+  Kyocera
+  LandRover         @map("Land Rover")
+  Landvo
+  Laude
+  Leagoo
+  LeEco
+  Lenovo
+  LeRee
+  LeTV
+  Lexand
+  LG
+  Lumigon
+  MHorse            @map("M-Horse")
+  Mann
+  Marshall
+  Maxon
+  Maze
+  Meizu
+  Micromax
+  Microsoft
+  Mijue
+  MiTAC
+  Mlais
+  Mobinnova
+  Motorola
+  MStar
+  NEC
+  Neken
+  Neo
+  Neomi
+  Neonode
+  Newman
+  Nextbit
+  No1               @map("No.1")
+  Noa
+  Nobby
+  Nokia
+  Nomi
+  Nomu
+  Nothing
+  Nous
+  O2
+  OnePlus
+  Onext
+  Onkyo
+  OPPO
+  Orange
+  ORSiO
+  Oukitel
+  Own
+  Oysters
+  Palm
+  Panasonic
+  Pantech
+  Pharos
+  Phicomm
+  Philips
+  Pine64
+  Pixelphone
+  Pixus
+  POCO
+  Poptel
+  PPTV
+  Prestigio
+  Purism
+  PuzzlePhone
+  QiGi
+  Qiku
+  Qin
+  Qtek
+  QUMO
+  Ramos
+  Razer
+  Realme
+  Red
+  Redmi
+  Ritmix
+  Ritzviva
+  RoverPC
+  RugGear
+  Runbo
+  STELL             @map("S-TELL")
+  Samsung
+  Santin
+  Sanyo
+  SciPhone
+  Sendo
+  Senseit
+  SERVO
+  Sharp
+  Siemens
+  Sigma
+  SilentCircle      @map("Silent Circle")
+  Siswoo
+  Sitronics
+  Smartisan
+  Snail
+  Sonim
+  Sony
+  SonyEricsson      @map("Sony Ericsson")
+  Star
+  Stark
+  Sugar
+  Sunno
+  TMobile           @map("T-Mobile")
+  Tatop
+  TCL
+  Tecno
+  Tele2
+  Telefunken
+  Tesla
+  teXet
+  Thl
+  Timmy
+  Tonino
+  ToninoLamborghini @map("Tonino Lamborghini")
+  Toshiba
+  TPLINK            @map("TP-LINK")
+  Trimble
+  Turbo
+  TurboPad
+  TurboPhone
+  Ubiquam
+  Uhans
+  UleFone
+  UMI
+  UMIDIGI
+  Unihertz
+  Vargo
+  Verne
+  Vernee
+  Vertex
+  Vertu
+  Viaan
+  ViewSonic
+  vivo
+  VKworld
+  Vodafone
+  Voxtel
+  VPhone
+  Vsmart
+  Wexler
+  Wieppo
+  Wigor
+  Wiko
+  Wileyfox
+  Xiaocai
+  Xiaomi
+  YotaDevices       @map("Yota Devices")
+  Zeaplus
+  Zifro
+  ZOJI
+  Zopo
+  ZTE
+  ZUK
+  Beeline           @map("Билайн")
+  Megafone          @map("МегаФон")
+  MTS               @map("МТС")
+  Yandex            @map("Яндекс")
+}

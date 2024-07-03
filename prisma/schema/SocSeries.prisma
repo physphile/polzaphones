@@ -1,0 +1,6 @@
+enum SocSeries {
+  Snapdragon
+  Exynos
+  Tensor
+  Dimensity
+}

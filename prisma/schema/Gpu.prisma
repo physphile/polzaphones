@@ -1,0 +1,11 @@
+model Gpu {
+  id        Int        @id @default(autoincrement())
+  vendor    GpuVendor?
+  series    GpuSeries?
+  name      String
+  socs      Soc[]
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+
+  @@unique([vendor, series, name])
+}

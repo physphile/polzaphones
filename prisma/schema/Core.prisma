@@ -1,0 +1,11 @@
+model Core {
+  id        Int           @id @default(autoincrement())
+  vendor    CoreVendor?
+  series    CoreSeries?
+  name      String
+  socs      CoresOnSocs[]
+  createdAt DateTime      @default(now())
+  updatedAt DateTime      @updatedAt
+
+  @@unique([vendor, series, name])
+}

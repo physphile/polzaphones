@@ -1,0 +1,10 @@
+model CoresOnSocs {
+  core      Core  @relation(fields: [coreId], references: [id])
+  soc       Soc   @relation(fields: [socId], references: [id])
+  coreId    Int
+  socId     Int
+  frequency Float
+
+  @@id([coreId, socId])
+  @@map("cores_on_socs")
+}

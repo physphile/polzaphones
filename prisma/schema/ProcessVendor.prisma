@@ -1,0 +1,4 @@
+enum ProcessVendor {
+  TSMC
+  Samsung
+}

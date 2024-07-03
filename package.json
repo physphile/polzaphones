@@ -1,0 +1,22 @@
+{
+  "scripts": {
+    "dev": "bun --watch src/index.ts",
+    "build": "bun build src/index.ts",
+    "start": "NODE_ENV=production bun src/index.ts",
+    "test": "bun test"
+  },
+  "dependencies": {
+    "@prisma/client": "^5.16.1",
+    "elysia": "^1.0.27"
+  },
+  "devDependencies": {
+    "prisma": "^5.16.1",
+    "@types/bun": "latest"
+  },
+  "name": "polzaphones-api",
+  "module": "index.ts",
+  "type": "module",
+  "peerDependencies": {
+    "typescript": "^5.0.0"
+  }
+}

@@ -1,0 +1,5 @@
+enum GpuSeries {
+  Adreno
+  Mali
+  Immortalis
+}

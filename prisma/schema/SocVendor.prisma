@@ -1,0 +1,7 @@
+enum SocVendor {
+  Samsung
+  Qualcomm
+  Apple
+  Google
+  MediaTek
+}
