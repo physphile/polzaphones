@@ -10,8 +10,9 @@
     "elysia": "^1.0.27"
   },
   "devDependencies": {
-    "prisma": "^5.16.1",
-    "@types/bun": "latest"
+    "@elysiajs/eden": "^1.0.14",
+    "@types/bun": "latest",
+    "prisma": "^5.16.1"
   },
   "name": "polzaphones-api",
   "module": "index.ts",
