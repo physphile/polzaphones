@@ -1,8 +1,8 @@
 model Soc {
-  id            Int            @id @default(autoincrement())
-  cores         CoresOnSocs[]
+  id Int @id @default(autoincrement())
+
   vendor        SocVendor?     @default(Unknown)
-  name          String
+  name          String?        @default("")
   series        SocSeries?     @default(Unknown)
   nanometers    Int?
   process       String?
@@ -11,8 +11,12 @@ model Soc {
   gpuFrequency  Float?         @map("gpu_frequency")
   gpuCores      Int?           @map("gpu_cores")
   processVendor ProcessVendor? @map("process_vendor")
-  createdAt     DateTime       @default(now()) @map("created_at")
-  updatedAt     DateTime       @updatedAt @map("updated_at")
+  link          String?
+
+  cores CoresOnSocs[]
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
 
   @@unique([name, vendor, series])
   @@map("soc")

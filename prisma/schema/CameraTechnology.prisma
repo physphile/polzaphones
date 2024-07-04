@@ -1,0 +1,6 @@
+enum CameraTechnology {
+  ISOCELL
+  CMOS
+
+  @@map("camera_technology")
+}

@@ -1,0 +1,9 @@
+enum CameraType {
+  Ultrawide
+  Wide
+  Telephoto
+  Macro
+  Zoom
+
+  @@map("camera_type")
+}

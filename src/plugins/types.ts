@@ -11,10 +11,9 @@ export const params = t.Object({
 	id: t.Numeric(),
 });
 
-export const withId = <T extends TSchema>(d: T) => t.Composite([d, t.Object({ id: t.Numeric() })]);
-export const minMax = t.Optional(
-	t.Object({ min: t.Optional(t.Numeric()), max: t.Optional(t.Numeric()) })
-);
+export const minMax = t.Optional(t.Object({ min: t.Optional(t.Numeric()), max: t.Optional(t.Numeric()) }));
+export const toRange = (b: { min?: number; max?: number } | undefined, options?: { reverse: boolean }) =>
+	options?.reverse ? { gte: b?.max, lte: b?.min } : { gte: b?.min, lte: b?.max };
 
 export type ToSchema<T> = Partial<{ [K in keyof T]: TSchema }>;
 

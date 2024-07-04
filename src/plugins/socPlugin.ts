@@ -1,30 +1,29 @@
 import Elysia, { t } from "elysia";
-import { GetQuery, LIMIT, minMax, params, withId } from "./types";
+import { GetQuery, LIMIT, minMax, params, toRange } from "./types";
 import { $Enums } from "@prisma/client";
 import { prisma } from "../../prisma";
 
 const endpoint = "/soc";
 
-const socBody = t.Object({
-	name: t.String(),
-	vendor: t.Optional(t.Enum($Enums.SocVendor)),
-	processVendor: t.Optional(t.Enum($Enums.ProcessVendor)),
-	gpuCores: t.Optional(t.Numeric()),
-	gpuFrequency: t.Optional(t.Numeric()),
-	nanometers: t.Optional(t.Numeric()),
-	process: t.Optional(t.String()),
-	cores: t.Optional(
-		t.Array(
+const socPartial = t.Partial(
+	t.Object({
+		name: t.String(),
+		vendor: t.Enum($Enums.SocVendor),
+		processVendor: t.Enum($Enums.ProcessVendor),
+		gpuCores: t.Numeric(),
+		gpuFrequency: t.Numeric(),
+		nanometers: t.Numeric(),
+		process: t.String(),
+		cores: t.Array(
 			t.Object({
 				id: t.Numeric(),
-				frequency: t.Optional(t.Numeric()),
-				number: t.Optional(t.Numeric()),
+				frequency: t.Numeric(),
+				number: t.Numeric(),
 			})
-		)
-	),
-	gpu: t.Optional(t.Numeric()),
-});
-const socPartial = t.Partial(socBody);
+		),
+		gpu: t.Numeric(),
+	})
+);
 const socQuery = t.Composite([
 	t.Omit(socPartial, ["gpuCores", "gpuFrequency", "nanometers"]),
 	t.Object({
@@ -69,25 +68,11 @@ export const socPlugin = new Elysia({ name: "socPlugin" })
 				},
 			});
 		},
-		{ body: socBody }
+		{ body: socPartial }
 	)
 	.get(
 		endpoint,
-		({
-			query: {
-				name,
-				vendor,
-				gpuCores,
-				gpuFrequency,
-				nanometers,
-				process,
-				processVendor,
-				limit = LIMIT,
-				offset,
-				order,
-				orderBy,
-			},
-		}) =>
+		({ query: { name, vendor, gpuCores, gpuFrequency, nanometers, process, processVendor, limit = LIMIT, offset, order, orderBy } }) =>
 			prisma.soc.findMany({
 				orderBy: orderBy
 					? {
@@ -101,18 +86,9 @@ export const socPlugin = new Elysia({ name: "socPlugin" })
 						contains: name,
 					},
 					vendor,
-					gpuCores: {
-						gte: gpuCores?.min,
-						lte: gpuCores?.max,
-					},
-					gpuFrequency: {
-						gte: gpuFrequency?.min,
-						lte: gpuFrequency?.max,
-					},
-					nanometers: {
-						gte: nanometers?.min,
-						lte: nanometers?.max,
-					},
+					gpuCores: toRange(gpuCores),
+					gpuFrequency: toRange(gpuCores),
+					nanometers: toRange(gpuCores),
 					process,
 					processVendor,
 				},

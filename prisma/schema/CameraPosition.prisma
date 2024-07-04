@@ -1,0 +1,6 @@
+enum CameraPosition {
+  Front
+  Rear
+
+  @@map("camera_position")
+}

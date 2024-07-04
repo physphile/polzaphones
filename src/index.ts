@@ -9,6 +9,7 @@ import {
 } from "@prisma/client/runtime/library";
 import { gpuPlugin } from "./plugins/gpuPlugin";
 import { socPlugin } from "./plugins/socPlugin";
+import { cameraPlugin } from "./plugins/cameraPlugin";
 
 const port = 3000;
 
@@ -44,4 +45,5 @@ export const app = new Elysia()
 	.use(corePlugin)
 	.use(gpuPlugin)
 	.use(socPlugin)
+	.use(cameraPlugin)
 	.listen(port, () => console.log(`Bun is listening port ${port}`));

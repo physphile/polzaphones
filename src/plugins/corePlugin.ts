@@ -5,12 +5,13 @@ import { prisma } from "../../prisma";
 
 const endpoint = "/core";
 
-export const coreBody = t.Object({
-	name: t.String(),
-	series: t.Optional(t.Enum($Enums.CoreSeries)),
-	vendor: t.Optional(t.Enum($Enums.CoreVendor)),
-} satisfies ToSchema<Core>);
-export const corePartial = t.Partial(coreBody);
+export const corePartial = t.Partial(
+	t.Object({
+		name: t.String(),
+		series: t.Enum($Enums.CoreSeries),
+		vendor: t.Enum($Enums.CoreVendor),
+	} satisfies ToSchema<Core>)
+);
 
 export const corePlugin = new Elysia({ name: "corePlugin" })
 	.post(
@@ -19,7 +20,7 @@ export const corePlugin = new Elysia({ name: "corePlugin" })
 			prisma.core.create({
 				data: body,
 			}),
-		{ body: coreBody }
+		{ body: corePartial }
 	)
 	.get(
 		endpoint,
@@ -28,7 +29,7 @@ export const corePlugin = new Elysia({ name: "corePlugin" })
 				orderBy: orderBy
 					? {
 							[orderBy]: order,
-					  }
+						}
 					: undefined,
 				take: limit,
 				skip: offset,
@@ -44,11 +45,7 @@ export const corePlugin = new Elysia({ name: "corePlugin" })
 			query: t.Composite([GetQuery, corePartial]),
 		}
 	)
-	.get(
-		`${endpoint}/:id`,
-		async ({ params: { id } }) => prisma.core.findUniqueOrThrow({ where: { id } }),
-		{ params }
-	)
+	.get(`${endpoint}/:id`, async ({ params: { id } }) => prisma.core.findUniqueOrThrow({ where: { id } }), { params })
 	.patch(
 		`${endpoint}/:id`,
 		({ params: { id }, body: { ...body } }) =>

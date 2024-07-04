@@ -5,12 +5,13 @@ import { prisma } from "../../prisma";
 
 const endpoint = "/gpu";
 
-export const gpuBody = t.Object({
-	name: t.String(),
-	series: t.Optional(t.Enum($Enums.GpuSeries)),
-	vendor: t.Optional(t.Enum($Enums.GpuVendor)),
-} satisfies ToSchema<Gpu>);
-export const gpuPartial = t.Partial(gpuBody);
+export const gpuPartial = t.Partial(
+	t.Object({
+		name: t.String(),
+		series: t.Enum($Enums.GpuSeries),
+		vendor: t.Enum($Enums.GpuVendor),
+	} satisfies ToSchema<Gpu>)
+);
 
 export const gpuPlugin = new Elysia({ name: "gpuPlugin" })
 	.post(
@@ -19,7 +20,7 @@ export const gpuPlugin = new Elysia({ name: "gpuPlugin" })
 			prisma.gpu.create({
 				data: body,
 			}),
-		{ body: gpuBody }
+		{ body: gpuPartial }
 	)
 	.get(
 		endpoint,
@@ -28,7 +29,7 @@ export const gpuPlugin = new Elysia({ name: "gpuPlugin" })
 				orderBy: orderBy
 					? {
 							[orderBy]: order,
-					  }
+						}
 					: undefined,
 				take: limit,
 				skip: offset,
@@ -44,11 +45,7 @@ export const gpuPlugin = new Elysia({ name: "gpuPlugin" })
 			query: t.Composite([GetQuery, gpuPartial]),
 		}
 	)
-	.get(
-		`${endpoint}/:id`,
-		async ({ params: { id } }) => prisma.gpu.findUniqueOrThrow({ where: { id } }),
-		{ params }
-	)
+	.get(`${endpoint}/:id`, async ({ params: { id } }) => prisma.gpu.findUniqueOrThrow({ where: { id } }), { params })
 	.patch(
 		`${endpoint}/:id`,
 		({ params: { id }, body: { ...body } }) =>

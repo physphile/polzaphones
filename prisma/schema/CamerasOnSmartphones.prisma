@@ -1,0 +1,19 @@
+model CamerasOnSmartphones {
+  cameraId     Int
+  smartphoneId Int
+
+  camera     Camera     @relation(fields: [cameraId], references: [id], onDelete: Restrict)
+  smartphone Smartphone @relation(fields: [smartphoneId], references: [id], onDelete: Cascade)
+
+  minAperture Float?          @map("min_aperture")
+  maxAperture Float?          @map("max_aperture")
+  position    CameraPosition?
+  focal       Int?
+  type        CameraType?
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@id([cameraId, smartphoneId])
+  @@map("cameras_on_smartphones")
+}

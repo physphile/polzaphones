@@ -1,0 +1,10 @@
+enum CameraVendor {
+  Sony
+  Omnivision
+  Samsung
+  Apple
+  Hynix
+  Unknown    @map("Неизвестно")
+
+  @@map("camera_vendor")
+}

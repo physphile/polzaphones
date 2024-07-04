@@ -1,0 +1,19 @@
+model Camera {
+  id Int @id @default(autoincrement())
+
+  vendor     CameraVendor?     @default(Unknown)
+  name       String?           @default("")
+  resolution Float?
+  size       Float?
+  technology CameraTechnology?
+  pixelSize  Float?            @map("pixel_size")
+  binning    Int?
+
+  smartphones CamerasOnSmartphones[]
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@unique([vendor, name])
+  @@map("camera")
+}
