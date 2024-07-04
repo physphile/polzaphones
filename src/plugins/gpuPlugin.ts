@@ -13,7 +13,7 @@ export const gpuPartial = t.Partial(
 	} satisfies ToSchema<Gpu>)
 );
 
-export const gpuPlugin = new Elysia({ name: "gpuPlugin" })
+export const gpuPlugin = new Elysia({ name: "gpuPlugin", detail: { tags: ["Gpu"] } })
 	.post(
 		endpoint,
 		({ body: { ...body } }) =>
@@ -29,7 +29,7 @@ export const gpuPlugin = new Elysia({ name: "gpuPlugin" })
 				orderBy: orderBy
 					? {
 							[orderBy]: order,
-						}
+					  }
 					: undefined,
 				take: limit,
 				skip: offset,

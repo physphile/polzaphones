@@ -10,11 +10,12 @@ import {
 import { gpuPlugin } from "./plugins/gpuPlugin";
 import { socPlugin } from "./plugins/socPlugin";
 import { cameraPlugin } from "./plugins/cameraPlugin";
+import swagger from "@elysiajs/swagger";
 
 const port = 3000;
 
 export const app = new Elysia()
-	.onError(({ code, error: err }) => {
+	.onError(({ error: err }) => {
 		if (err instanceof PrismaClientKnownRequestError) {
 			switch (err.code) {
 				case "P2025":
@@ -42,6 +43,23 @@ export const app = new Elysia()
 		}
 		return error(500, JSON.stringify(err));
 	})
+	.use(
+		swagger({
+			documentation: {
+				info: {
+					title: "Документация api Polzaphones",
+					version: "0.0.1",
+				},
+				tags: [
+					{ name: "Smartphone", description: "Smartphone endpoints" },
+					{ name: "Camera", description: "Camera endpoints" },
+					{ name: "Soc", description: "Soc endpoint" },
+					{ name: "Gpu", description: "Soc endpoints" },
+					{ name: "Core", description: "Core endpoints" },
+				],
+			},
+		})
+	)
 	.use(corePlugin)
 	.use(gpuPlugin)
 	.use(socPlugin)

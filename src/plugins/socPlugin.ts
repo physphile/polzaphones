@@ -33,7 +33,7 @@ const socQuery = t.Composite([
 	}),
 ]);
 
-export const socPlugin = new Elysia({ name: "socPlugin" })
+export const socPlugin = new Elysia({ name: "socPlugin", detail: { tags: ["Soc"] } })
 	.post(
 		endpoint,
 		async ({ body: { cores, gpu, ...body } }) => {
@@ -87,8 +87,8 @@ export const socPlugin = new Elysia({ name: "socPlugin" })
 					},
 					vendor,
 					gpuCores: toRange(gpuCores),
-					gpuFrequency: toRange(gpuCores),
-					nanometers: toRange(gpuCores),
+					gpuFrequency: toRange(gpuFrequency),
+					nanometers: toRange(nanometers),
 					process,
 					processVendor,
 				},

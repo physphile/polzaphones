@@ -6,6 +6,7 @@
     "test": "bun test"
   },
   "dependencies": {
+    "@elysiajs/swagger": "^1.0.5",
     "@prisma/client": "^5.16.1",
     "elysia": "^1.0.27"
   },

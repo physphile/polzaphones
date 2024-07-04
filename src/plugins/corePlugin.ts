@@ -13,7 +13,7 @@ export const corePartial = t.Partial(
 	} satisfies ToSchema<Core>)
 );
 
-export const corePlugin = new Elysia({ name: "corePlugin" })
+export const corePlugin = new Elysia({ name: "corePlugin", detail: { tags: ["Core"] } })
 	.post(
 		endpoint,
 		({ body: { ...body } }) =>
@@ -29,7 +29,7 @@ export const corePlugin = new Elysia({ name: "corePlugin" })
 				orderBy: orderBy
 					? {
 							[orderBy]: order,
-						}
+					  }
 					: undefined,
 				take: limit,
 				skip: offset,

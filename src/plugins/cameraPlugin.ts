@@ -27,7 +27,7 @@ const socQuery = t.Composite([
 	}),
 ]);
 
-export const cameraPlugin = new Elysia({ name: "cameraPlugin" })
+export const cameraPlugin = new Elysia({ name: "cameraPlugin", detail: { tags: ["Camera"] } })
 	.post(
 		endpoint,
 		({ body: { ...body } }) =>
