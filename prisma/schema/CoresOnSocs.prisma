@@ -1,6 +1,6 @@
 model CoresOnSocs {
-  coreId Int
-  socId  Int
+  coreId Int @map("core_id")
+  socId  Int @map("soc_id")
 
   core Core @relation(fields: [coreId], references: [id], onDelete: Restrict)
   soc  Soc  @relation(fields: [socId], references: [id], onDelete: Cascade)

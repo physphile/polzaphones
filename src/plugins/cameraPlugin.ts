@@ -43,7 +43,7 @@ export const cameraPlugin = new Elysia({ name: "cameraPlugin", detail: { tags: [
 				orderBy: orderBy
 					? {
 							[orderBy]: order,
-					  }
+						}
 					: undefined,
 				take: limit,
 				skip: offset,

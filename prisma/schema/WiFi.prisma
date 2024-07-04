@@ -1,0 +1,8 @@
+enum WiFi {
+  Wifi5  @map("5")
+  Wifi6  @map("6")
+  Wifi6E @map("6E")
+  Wifi7  @map("7")
+
+  @@map("wifi")
+}

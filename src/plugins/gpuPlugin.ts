@@ -29,7 +29,7 @@ export const gpuPlugin = new Elysia({ name: "gpuPlugin", detail: { tags: ["Gpu"]
 				orderBy: orderBy
 					? {
 							[orderBy]: order,
-					  }
+						}
 					: undefined,
 				take: limit,
 				skip: offset,

@@ -1,0 +1,8 @@
+enum SimSize {
+  Full
+  Mini
+  Micro
+  Nano
+
+  @@map("sim_size")
+}

@@ -8,6 +8,7 @@ model Camera {
   technology CameraTechnology?
   pixelSize  Float?            @map("pixel_size")
   binning    Int?
+  link       String?
 
   smartphones CamerasOnSmartphones[]
 
@@ -15,5 +16,5 @@ model Camera {
   updatedAt DateTime @updatedAt @map("updated_at")
 
   @@unique([vendor, name])
-  @@map("camera")
+  @@map("cameras")
 }

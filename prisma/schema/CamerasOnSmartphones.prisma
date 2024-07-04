@@ -1,15 +1,22 @@
 model CamerasOnSmartphones {
-  cameraId     Int
-  smartphoneId Int
+  cameraId     Int @map("camera_id")
+  smartphoneId Int @map("smartphone_id")
 
   camera     Camera     @relation(fields: [cameraId], references: [id], onDelete: Restrict)
   smartphone Smartphone @relation(fields: [smartphoneId], references: [id], onDelete: Cascade)
 
-  minAperture Float?          @map("min_aperture")
-  maxAperture Float?          @map("max_aperture")
-  position    CameraPosition?
-  focal       Int?
-  type        CameraType?
+  minAperture        Float?           @map("min_aperture")
+  maxAperture        Float?           @map("max_aperture")
+  position           CameraPosition?
+  focal              Int?
+  type               CameraType?
+  stabilization      Stabilization?
+  laf                Boolean?
+  maxVideoResolution VideoResolution? @map("max_video_resolution")
+  maxVideoFramerate  Int?             @map("max_video_framerate")
+  fov                Int?
+  autofocus          Boolean?
+  minFocusDistance   Int?             @map("min_focus_distance")
 
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")

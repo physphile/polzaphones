@@ -1,0 +1,9 @@
+enum Material {
+  Aluminium @map("Алюминий")
+  Steel     @map("Сталь")
+  Plastic   @map("Пластик")
+  Titan     @map("Титан")
+  Glass     @map("Стекло")
+
+  @@map("material")
+}

@@ -1,0 +1,12 @@
+enum RomType {
+  EMMC51 @map("eMMC 5.1")
+  UFS20  @map("UFS 2.0")
+  UFS21  @map("UFS 2.1")
+  UFS22  @map("UFS 2.2")
+  UFS30  @map("UFS 3.0")
+  UFS31  @map("UFS 3.1")
+  UFS32  @map("UFS 3.2")
+  UFS40  @map("UFS 4.0")
+
+  @@map("rom_type")
+}

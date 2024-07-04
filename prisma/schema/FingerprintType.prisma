@@ -1,0 +1,6 @@
+enum FingerprintType {
+  Optical
+  Ultrasonic
+
+  @@map("fingerprint_type")
+}

@@ -1,0 +1,11 @@
+enum UsbVersion {
+  Usb10       @map("1.0")
+  Usb11       @map("1.1")
+  Usb20       @map("2.0")
+  Usb32Gen1   @map("3.2 Gen 1")
+  Usb32Gen2   @map("3.2 Gen 2")
+  Usb32Gen2x2 @map("3.2 Gen 2x2")
+  Usb4        @map("4")
+
+  @@map("usb_version")
+}

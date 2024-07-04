@@ -1,16 +1,110 @@
 model Smartphone {
   id Int @id @default(autoincrement())
 
-  resistance Resistance?
-  vendor     Vendor
-  name       String
-  series     String?     @default("")
+  vendor                    Vendor?              @default(Unknown)
+  name                      String?              @default("")
+  series                    String?              @default("")
+  version                   String?              @default("")
+  ltpo                      Boolean?
+  resistance                Resistance?
+  packCase                  Boolean?             @map("pack_case")
+  packAdapterPower          Int?                 @map("pack_adapter_power")
+  packAdapterUsb            UsbType?             @map("pack_adapter_usb")
+  packFilm                  Boolean?             @map("pack_film")
+  simNumber                 Int?                 @map("sim_number")
+  simSize                   SimSize?             @map("sim_size")
+  esim                      Boolean?
+  weight                    Int?
+  height                    Int?
+  width                     Int?
+  thickness                 Float?
+  colorName                 String?              @map("color_name")
+  colorHex                  String?              @map("color_hex")
+  frameMaterial             Material?            @map("frame_material")
+  rearMaterial              Material?            @map("rear_material")
+  volumeOnTheLeft           Boolean?             @map("volume_on_the_left")
+  usbType                   UsbType?             @map("usb_type")
+  usbVersion                UsbVersion?          @map("usb_version")
+  ramSize                   Int?                 @map("ram_size")
+  ramType                   RamType?             @map("ram_type")
+  romSize                   Int?                 @map("rom_size")
+  romType                   RomType?             @map("rom_type")
+  sound                     Sound?
+  miniJack                  Boolean?             @map("mini_jack")
+  ir                        Boolean?
+  proximity                 Boolean?
+  hapticEngine              Boolean?             @map("haptic_engine")
+  codecSbc                  Boolean?             @map("codec_sbc")
+  codecAac                  Boolean?             @map("codec_aac")
+  codecAptx                 Boolean?             @map("codec_aptx")
+  codecAptxAdaptive         Boolean?             @map("codec_aptx_adaptive")
+  codecAptxHd               Boolean?             @map("codec_aptx_hd")
+  codecLdac                 Boolean?             @map("codec_ldac")
+  codecLhdc                 Boolean?             @map("codec_lhdc")
+  codecLc3                  Boolean?             @map("codec_lc3")
+  bluetooth                 Float?
+  displayType               DisplayType?         @map("display_type")
+  displayDiagonal           Float?               @map("display_diagonal")
+  displayResolutionX        Int?                 @map("display_resolution_x")
+  displayResolutionY        Int?                 @map("display_resolution_y")
+  displayMinFps             Int?                 @map("display_min_fps")
+  displayMaxFps             Int?                 @map("display_max_fps")
+  displayAspectRatio        DisplayAspectRatio?  @map("display_aspect_ratio")
+  displayBodyRatio          Float?               @map("display_body_ratio")
+  displaySrgb               Int?                 @map("display_srgb")
+  displayDciP3              Int?                 @map("display_dci_p3")
+  hdr10Plus                 Boolean?             @map("hdr_10_plus")
+  ppi                       Int?
+  displayCurved             Boolean?             @map("display_curved")
+  maxBrightness             Int?                 @map("max_brightness")
+  multitouch                Int?
+  pwmFrequency              Int?                 @map("pwm_frequency")
+  pwmMaxRatio               Int?                 @map("pwm_max_ratio")
+  aod                       Boolean?
+  fingerprintPosition       FingerprintPosition? @map("fingerprint_position")
+  fingerprintType           FingerprintType?     @map("fingerprint_type")
+  fingerprintRepeat         Boolean?             @map("fingerprint_repeat")
+  fingerprintMaxNumber      Int?                 @map("fingerprint_max_number")
+  facaUnlock                Boolean?             @map("face_unlock")
+  faceUnlockMaxNumber       Int?                 @map("face_unlock_max_number")
+  android                   Float?
+  ios                       Float?
+  harmony                   Float?
+  firmware                  String?
+  russian                   Boolean?
+  preinstalledAppsRemovable Boolean?             @map("preinstalled_apps_removable")
+  wifi                      WiFi?
+  googleServices            Boolean?             @map("google_services")
+  fourpda                   String?
+  polza                     String?
+  website                   String?
+  kimovil                   String?
+  devdb                     String?
+  callRecording             Boolean?             @map("call_recording")
+  nfc                       Boolean?
+  batteryCapacity           Int?                 @map("battery_capacity")
+  pcmark                    Int?
+  workbench                 Int?
+  geekbenchSingle           Int?                 @map("geekbench_single")
+  geekbenchMulti            Int?                 @map("geekbench_multi")
+  geekbenchGpu              Int?                 @map("geekbench_gpu")
+  antutu                    Int?
+  reverseCharging           Boolean?             @map("reverse_charging")
+  wirelessCharging          Boolean?             @map("wireless_charging")
+  throttlingMax             Int?                 @map("throttling_max")
+  throttlingAvg             Int?                 @map("throttling_avg")
+  throttlingMin             Int?                 @map("throttling_min")
+  cameraMark                CameraMark?          @map("camera_mark")
 
-  cameras CamerasOnSmartphones[]
+  cameras  CamerasOnSmartphones[]
+  soc      Soc                    @relation(fields: [socId], references: [id])
+  socId    Int                    @map("soc_id")
+  stores   Store[]
+  features Feature[]
 
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
 
-  @@unique([vendor, name, series])
-  @@map("smartphone")
+  @@unique([vendor, name, series, version])
+  @@map("smartphones")
 }

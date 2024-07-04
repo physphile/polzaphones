@@ -12,5 +12,5 @@ model Core {
   updatedAt DateTime @updatedAt @map("updated_at")
 
   @@unique([vendor, series, name])
-  @@map("core")
+  @@map("cores")
 }

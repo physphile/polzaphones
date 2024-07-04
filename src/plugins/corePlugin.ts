@@ -29,7 +29,7 @@ export const corePlugin = new Elysia({ name: "corePlugin", detail: { tags: ["Cor
 				orderBy: orderBy
 					? {
 							[orderBy]: order,
-					  }
+						}
 					: undefined,
 				take: limit,
 				skip: offset,

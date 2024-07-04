@@ -1,0 +1,7 @@
+enum Stabilization {
+  OIS  @map("Оптическая")
+  EIS  @map("Электронная")
+  None @map("Нет")
+
+  @@map("stabilization")
+}

@@ -1,0 +1,8 @@
+enum FingerprintPosition {
+  Rear
+  Front
+  Display
+  Button
+
+  @@map("fingerprint_position")
+}

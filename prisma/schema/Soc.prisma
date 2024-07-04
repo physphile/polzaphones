@@ -6,18 +6,19 @@ model Soc {
   series        SocSeries?     @default(Unknown)
   nanometers    Int?
   process       String?
-  gpu           Gpu?           @relation(fields: [gpuId], references: [id])
-  gpuId         Int?
   gpuFrequency  Float?         @map("gpu_frequency")
   gpuCores      Int?           @map("gpu_cores")
   processVendor ProcessVendor? @map("process_vendor")
   link          String?
 
-  cores CoresOnSocs[]
+  gpu         Gpu?          @relation(fields: [gpuId], references: [id])
+  gpuId       Int?          @map("gpu_id")
+  cores       CoresOnSocs[]
+  smartphones Smartphone[]
 
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
 
   @@unique([name, vendor, series])
-  @@map("soc")
+  @@map("socs")
 }

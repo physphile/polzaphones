@@ -1,0 +1,6 @@
+enum UsbType {
+  TypeC @map("Type-C")
+  TypeA @map("Type-A")
+
+  @@map("usb_type")
+}

@@ -1,4 +1,5 @@
 enum Vendor {
+  Unknown           @map("Неизвестно")
   ThreeHundredSixty @map("360")
   ThreeQ            @map("3Q")
   FourGood          @map("4Good")

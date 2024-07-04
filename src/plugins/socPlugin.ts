@@ -62,7 +62,7 @@ export const socPlugin = new Elysia({ name: "socPlugin", detail: { tags: ["Soc"]
 										number: c.number,
 										coreId: c.id,
 									})),
-							  }
+								}
 							: undefined,
 					},
 				},
@@ -77,7 +77,7 @@ export const socPlugin = new Elysia({ name: "socPlugin", detail: { tags: ["Soc"]
 				orderBy: orderBy
 					? {
 							[orderBy]: order,
-					  }
+						}
 					: undefined,
 				take: limit,
 				skip: offset,
@@ -134,7 +134,7 @@ export const socPlugin = new Elysia({ name: "socPlugin", detail: { tags: ["Soc"]
 										coreId: c.id,
 									})),
 									skipDuplicates: true,
-							  }
+								}
 							: undefined,
 					},
 				},

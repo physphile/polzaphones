@@ -1,0 +1,9 @@
+model Feature {
+  id Int @id @default(autoincrement())
+
+  name String
+
+  smartphones Smartphone[]
+
+  @@map("features")
+}

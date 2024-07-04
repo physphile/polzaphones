@@ -1,0 +1,10 @@
+model Store {
+  id Int @id @default(autoincrement())
+
+  name String @unique
+  link String
+
+  smartphones Smartphone[]
+
+  @@map("stores")
+}

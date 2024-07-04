@@ -1,0 +1,7 @@
+enum Sound {
+  Stereo     @map("Стерео")
+  OneAndHalf @map("Полуторка")
+  Mono       @map("Моно")
+
+  @@map("sound")
+}

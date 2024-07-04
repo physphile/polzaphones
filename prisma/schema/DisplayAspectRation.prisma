@@ -1,0 +1,10 @@
+enum DisplayAspectRatio {
+  A16x9  @map("16:9")
+  A19x9  @map("19:9")
+  A195x9 @map("19,5:9")
+  A20x9  @map("20:9")
+  A205x9 @map("20,5:9")
+  A21x9  @map("21x9")
+
+  @@map("display_aspect_ratio")
+}

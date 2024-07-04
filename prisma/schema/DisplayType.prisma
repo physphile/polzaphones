@@ -1,0 +1,10 @@
+enum DisplayType {
+  AMOLED
+  OLED
+  IPS
+  POLED
+  IGZO
+  TFT
+
+  @@map("display_type")
+}

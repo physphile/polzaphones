@@ -1,0 +1,8 @@
+enum VideoResolution {
+  HD
+  FullHD @map("Full HD")
+  FourK  @map("4K")
+  EightK @map("8K")
+
+  @@map("video_resolution")
+}

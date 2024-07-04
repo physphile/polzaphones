@@ -1,0 +1,7 @@
+enum CameraMark {
+  Leica
+  Zeiss
+  Hasselblad
+
+  @@map("camera_mark")
+}
