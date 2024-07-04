@@ -1,8 +1,9 @@
 model Soc {
   id            Int            @id @default(autoincrement())
   cores         CoresOnSocs[]
-  vendor        SocVendor?
+  vendor        SocVendor?     @default(Unknown)
   name          String
+  series        SocSeries?     @default(Unknown)
   nanometers    Int?
   process       String?
   gpu           Gpu?           @relation(fields: [gpuId], references: [id])
@@ -12,4 +13,7 @@ model Soc {
   processVendor ProcessVendor? @map("process_vendor")
   createdAt     DateTime       @default(now()) @map("created_at")
   updatedAt     DateTime       @updatedAt @map("updated_at")
+
+  @@unique([name, vendor, series])
+  @@map("soc")
 }

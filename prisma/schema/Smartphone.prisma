@@ -3,7 +3,10 @@ model Smartphone {
   resistance Resistance?
   vendor     Vendor
   name       String
-  series     String?
+  series     String?     @default("")
   createdAt  DateTime    @default(now()) @map("created_at")
   updatedAt  DateTime    @updatedAt @map("updated_at")
+
+  @@unique([vendor, name, series])
+  @@map("smartphone")
 }

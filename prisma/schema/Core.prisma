@@ -1,11 +1,12 @@
 model Core {
   id        Int           @id @default(autoincrement())
-  vendor    CoreVendor?
-  series    CoreSeries?
+  vendor    CoreVendor?   @default(Unknown)
+  series    CoreSeries?   @default(Unknown)
   name      String
   socs      CoresOnSocs[]
   createdAt DateTime      @default(now()) @map("created_at")
   updatedAt DateTime      @updatedAt @map("updated_at")
 
   @@unique([vendor, series, name])
+  @@map("core")
 }

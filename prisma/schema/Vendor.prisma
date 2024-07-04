@@ -315,4 +315,6 @@ enum Vendor {
   Megafone          @map("МегаФон")
   MTS               @map("МТС")
   Yandex            @map("Яндекс")
+
+  @@map("vendor")
 }

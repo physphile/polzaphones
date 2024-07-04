@@ -23,6 +23,8 @@ export const app = new Elysia()
 						...err,
 						message: `В таблице ${err.meta?.modelName} нет колонки ${err.meta?.column}`,
 					});
+				case "P2002":
+					return error(409, { ...err, message: "Конфликт" });
 			}
 		}
 		if (err instanceof PrismaClientUnknownRequestError) {

@@ -2,4 +2,7 @@ enum GpuSeries {
   Adreno
   Mali
   Immortalis
+  Unknown    @map("Неизвестно")
+
+  @@map("gpu_series")
 }

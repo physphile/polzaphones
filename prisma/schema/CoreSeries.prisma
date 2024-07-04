@@ -1,4 +1,7 @@
 enum CoreSeries {
   Cortex
   Kryo
+  Unknown @map("Неизвестно")
+
+  @@map("core_series")
 }

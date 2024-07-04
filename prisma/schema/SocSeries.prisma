@@ -3,4 +3,7 @@ enum SocSeries {
   Exynos
   Tensor
   Dimensity
+  Unknown    @map("Неизвестно")
+
+  @@map("soc_series")
 }

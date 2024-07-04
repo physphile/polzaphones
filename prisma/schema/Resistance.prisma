@@ -42,4 +42,6 @@ enum Resistance {
   IP67
   IP68
   IP69
+
+  @@map("resistance")
 }

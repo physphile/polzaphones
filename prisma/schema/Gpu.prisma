@@ -1,11 +1,12 @@
 model Gpu {
   id        Int        @id @default(autoincrement())
-  vendor    GpuVendor?
-  series    GpuSeries?
+  vendor    GpuVendor? @default(Unknown)
+  series    GpuSeries? @default(Unknown)
   name      String
   socs      Soc[]
   createdAt DateTime   @default(now()) @map("created_at")
   updatedAt DateTime   @updatedAt @map("updated_at")
 
   @@unique([vendor, series, name])
+  @@map("gpu")
 }

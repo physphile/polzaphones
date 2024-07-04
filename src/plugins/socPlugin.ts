@@ -56,11 +56,15 @@ export const socPlugin = new Elysia({ name: "socPlugin" })
 				},
 				data: {
 					cores: {
-						create: cores?.map(c => ({
-							frequency: c.frequency,
-							number: c.number,
-							coreId: c.id,
-						})),
+						createMany: cores
+							? {
+									data: cores.map(c => ({
+										frequency: c.frequency,
+										number: c.number,
+										coreId: c.id,
+									})),
+							  }
+							: undefined,
 					},
 				},
 			});
@@ -141,26 +145,21 @@ export const socPlugin = new Elysia({ name: "socPlugin" })
 						},
 					},
 					cores: {
-						disconnect: soc.cores
+						deleteMany: soc.cores
 							.filter(c => cores?.findIndex(_c => _c.id === c.coreId) === -1)
 							.map(c => ({
-								frequency: c.frequency,
-								number: c.number,
-								coreId_socId: {
-									coreId: c.coreId,
-									socId: soc.id,
-								},
+								coreId: c.coreId,
 							})),
-						connect: cores
-							?.filter(c => soc.cores.findIndex(_c => _c.coreId === c.id) === -1)
-							.map(c => ({
-								frequency: c.frequency,
-								number: c.number,
-								coreId_socId: {
-									coreId: c.id,
-									socId: soc.id,
-								},
-							})),
+						createMany: cores
+							? {
+									data: cores.map(c => ({
+										frequency: c.frequency,
+										number: c.number,
+										coreId: c.id,
+									})),
+									skipDuplicates: true,
+							  }
+							: undefined,
 					},
 				},
 			});

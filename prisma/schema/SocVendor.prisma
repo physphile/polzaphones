@@ -4,4 +4,7 @@ enum SocVendor {
   Apple
   Google
   MediaTek
+  Unknown  @map("Неизвестно")
+
+  @@map("soc_vendor")
 }

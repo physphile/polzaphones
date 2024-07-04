@@ -1,4 +1,7 @@
 enum CoreVendor {
   Apple
   ARM
+  Unknown @map("Неизвестно")
+
+  @@map("core_vendor")
 }

@@ -1,4 +1,6 @@
 enum ProcessVendor {
   TSMC
   Samsung
+
+  @@map("process_vendor")
 }

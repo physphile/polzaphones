@@ -2,4 +2,7 @@ enum GpuVendor {
   Qualcomm
   Apple
   ARM
+  Unknown  @map("Неизвестно")
+
+  @@map("gpu_vendor")
 }
