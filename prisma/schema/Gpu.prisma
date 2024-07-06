@@ -1,10 +1,11 @@
 model Gpu {
   id Int @id @default(autoincrement())
 
-  vendor GpuVendor? @default(Unknown)
-  series GpuSeries? @default(Unknown)
-  name   String?    @default("")
-  link   String?
+  vendor      GpuVendor? @default(Unknown)
+  series      GpuSeries? @default(Unknown)
+  name        String?    @default("")
+  link        String?
+  releaseDate String?    @map("release_date")
 
   socs Soc[]
 

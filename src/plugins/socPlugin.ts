@@ -1,30 +1,11 @@
 import Elysia, { t } from "elysia";
-import { ProcessVendor, SocSeries, SocVendor } from "@prisma/client";
 import { prisma } from "../../prisma";
-import { params, query, URL_PATTERN } from "../constants";
+import { params, query } from "../constants";
 import { toQuery, toPrisma } from "../utils";
+import { socSchema } from "./schemas/soc";
 
 const endpoint = "/soc";
 
-const socSchema = t.Object({
-	name: t.String(),
-	vendor: t.Enum(SocVendor),
-	processVendor: t.Enum(ProcessVendor),
-	gpuCores: t.Integer(),
-	gpuFrequency: t.Integer(),
-	nanometers: t.Integer(),
-	process: t.String(),
-	cores: t.Array(
-		t.Object({
-			id: t.Integer(),
-			frequency: t.Integer(),
-			number: t.Integer(),
-		})
-	),
-	gpu: t.Integer(),
-	series: t.Enum(SocSeries),
-	link: t.String({ pattern: URL_PATTERN }),
-});
 const socQuery = t.Partial(t.Object(toQuery(socSchema.properties, ["gpu"])));
 
 export const socPlugin = new Elysia({ name: "socPlugin", detail: { tags: ["Soc"] } })

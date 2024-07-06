@@ -89,12 +89,14 @@ model Smartphone {
   geekbenchMulti            Int?                 @map("geekbench_multi")
   geekbenchGpu              Int?                 @map("geekbench_gpu")
   antutu                    Int?
-  reverseCharging           Boolean?             @map("reverse_charging")
-  wirelessCharging          Boolean?             @map("wireless_charging")
+  chargePower               Int?                 @map("charge_power")
+  reverseChargePower        Int?                 @map("reverse_charge_power")
+  wirelessChargePower       Int?                 @map("wireless_charge_power")
   throttlingMax             Int?                 @map("throttling_max")
   throttlingAvg             Int?                 @map("throttling_avg")
   throttlingMin             Int?                 @map("throttling_min")
   cameraMark                CameraMark?          @map("camera_mark")
+  releaseDate               String?              @map("release_date")
 
   cameras  CamerasOnSmartphones[]
   soc      Soc                    @relation(fields: [socId], references: [id])

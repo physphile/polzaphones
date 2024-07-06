@@ -1,18 +1,11 @@
 import Elysia, { t } from "elysia";
-import { GpuSeries, GpuVendor, type Gpu } from "@prisma/client";
 import { prisma } from "../../prisma";
-import { LIMIT, params, query } from "../constants";
-import type { ToSchema } from "../types";
+import { params, query } from "../constants";
 import { toPrisma, toQuery } from "../utils";
+import { gpuSchema } from "./schemas/gpu";
 
 const endpoint = "/gpu";
 
-const gpuSchema = t.Object({
-	name: t.String(),
-	series: t.Enum(GpuSeries),
-	vendor: t.Enum(GpuVendor),
-	link: t.String(),
-} satisfies ToSchema<Gpu>);
 const gpuQuery = t.Object(toQuery(gpuSchema.properties));
 
 export const gpuPlugin = new Elysia({ name: "gpuPlugin", detail: { tags: ["Gpu"] } })

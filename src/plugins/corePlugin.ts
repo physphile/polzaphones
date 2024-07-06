@@ -1,18 +1,11 @@
 import Elysia, { t } from "elysia";
-import { CoreSeries, CoreVendor, type Core } from "@prisma/client";
 import { prisma } from "../../prisma";
 import { params, query } from "../constants";
-import type { ToSchema } from "../types";
 import { toPrisma, toQuery } from "../utils";
+import { coreSchema } from "./schemas/core";
 
 const endpoint = "/core";
 
-const coreSchema = t.Object({
-	name: t.String(),
-	series: t.Enum(CoreSeries),
-	vendor: t.Enum(CoreVendor),
-	link: t.String(),
-} satisfies ToSchema<Core>);
 const coreQuery = t.Object(toQuery(coreSchema.properties));
 
 export const corePlugin = new Elysia({ name: "corePlugin", detail: { tags: ["Core"] } })

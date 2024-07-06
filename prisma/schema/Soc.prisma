@@ -10,6 +10,7 @@ model Soc {
   gpuCores      Int?           @map("gpu_cores")
   processVendor ProcessVendor? @map("process_vendor")
   link          String?
+  releaseDate   String?        @map("release_date")
 
   gpu         Gpu?          @relation(fields: [gpuId], references: [id])
   gpuId       Int?          @map("gpu_id")

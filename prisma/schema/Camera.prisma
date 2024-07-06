@@ -1,14 +1,15 @@
 model Camera {
   id Int @id @default(autoincrement())
 
-  vendor     CameraVendor?     @default(Unknown)
-  name       String?           @default("")
-  resolution Float?
-  size       Float?
-  technology CameraTechnology?
-  pixelSize  Float?            @map("pixel_size")
-  binning    Int?
-  link       String?
+  vendor      CameraVendor?     @default(Unknown)
+  name        String?           @default("")
+  resolution  Float?
+  size        Float?
+  technology  CameraTechnology?
+  pixelSize   Float?            @map("pixel_size")
+  binning     Int?
+  link        String?
+  releaseDate String?           @map("release_date")
 
   smartphones CamerasOnSmartphones[]
 

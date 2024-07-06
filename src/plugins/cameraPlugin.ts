@@ -1,22 +1,11 @@
 import Elysia, { t } from "elysia";
-import { CameraTechnology, CameraVendor, type Camera } from "@prisma/client";
 import { prisma } from "../../prisma";
-import { params, query, URL_PATTERN } from "../constants";
-import type { ToSchema } from "../types";
+import { params, query } from "../constants";
 import { toPrisma, toQuery } from "../utils";
+import { cameraSchema } from "./schemas/camera";
 
 const endpoint = "/camera";
 
-const cameraSchema = t.Object({
-	name: t.String(),
-	binning: t.Integer(),
-	pixelSize: t.Number(),
-	resolution: t.Integer(),
-	size: t.Number(),
-	technology: t.Enum(CameraTechnology),
-	vendor: t.Enum(CameraVendor),
-	link: t.String({ pattern: URL_PATTERN }),
-} satisfies ToSchema<Camera>);
 const socQuery = t.Object(toQuery(cameraSchema.properties));
 
 export const cameraPlugin = new Elysia({ name: "cameraPlugin", detail: { tags: ["Camera"] } })
