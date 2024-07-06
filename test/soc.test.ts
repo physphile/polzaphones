@@ -69,8 +69,16 @@ describe("Проверка socPlugin", () => {
 		expect(data?.cores?.[0].core.series).toBe("Unknown");
 	});
 	it("Получает все Soc", async () => {
-		const { data } = await api.soc.get({ query: { orderBy: "created_at", order: "desc" } });
-		expect(data?.findIndex(c => c.id === socId)).not.toBe(-1);
+		const { data } = await api.soc.get({ query: { orderBy: "createdAt", order: "desc" } });
+		const i = data?.findIndex(c => c.id === socId);
+		expect(i).toBeNumber();
+		expect(i).not.toBe(-1);
+	});
+	it("Учитывает query-параметры", async () => {
+		const { data } = await api.soc.get({ query: { orderBy: "createdAt", order: "desc" } });
+		const i = data?.findIndex(c => c.id === socId);
+		expect(i).toBeNumber();
+		expect(i).not.toBe(-1);
 	});
 	it("Получает Soc по id", async () => {
 		if (!socId || !core1Id || !gpu1Id) return fail();

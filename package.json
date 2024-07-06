@@ -8,6 +8,7 @@
   "dependencies": {
     "@elysiajs/swagger": "^1.0.5",
     "@prisma/client": "^5.16.1",
+    "@sinclair/typebox": "^0.32.34",
     "elysia": "^1.0.27"
   },
   "devDependencies": {
@@ -19,6 +20,6 @@
   "module": "index.ts",
   "type": "module",
   "peerDependencies": {
-    "typescript": "^5.0.0"
+    "typescript": "^5.5.3"
   }
 }

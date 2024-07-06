@@ -101,8 +101,8 @@ CREATE TABLE "cameras" (
 
 -- CreateTable
 CREATE TABLE "cameras_on_smartphones" (
-    "cameraId" INTEGER NOT NULL,
-    "smartphoneId" INTEGER NOT NULL,
+    "camera_id" INTEGER NOT NULL,
+    "smartphone_id" INTEGER NOT NULL,
     "min_aperture" DOUBLE PRECISION,
     "max_aperture" DOUBLE PRECISION,
     "position" "camera_position",
@@ -118,7 +118,7 @@ CREATE TABLE "cameras_on_smartphones" (
     "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updated_at" TIMESTAMP(3) NOT NULL,
 
-    CONSTRAINT "cameras_on_smartphones_pkey" PRIMARY KEY ("cameraId","smartphoneId")
+    CONSTRAINT "cameras_on_smartphones_pkey" PRIMARY KEY ("camera_id","smartphone_id")
 );
 
 -- CreateTable
@@ -136,14 +136,14 @@ CREATE TABLE "cores" (
 
 -- CreateTable
 CREATE TABLE "cores_on_socs" (
-    "coreId" INTEGER NOT NULL,
-    "socId" INTEGER NOT NULL,
+    "core_id" INTEGER NOT NULL,
+    "soc_id" INTEGER NOT NULL,
     "number" INTEGER,
     "frequency" INTEGER,
     "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updated_at" TIMESTAMP(3) NOT NULL,
 
-    CONSTRAINT "cores_on_socs_pkey" PRIMARY KEY ("coreId","socId")
+    CONSTRAINT "cores_on_socs_pkey" PRIMARY KEY ("core_id","soc_id")
 );
 
 -- CreateTable
@@ -199,7 +199,7 @@ CREATE TABLE "smartphones" (
     "rom_size" INTEGER,
     "rom_type" "rom_type",
     "sound" "sound",
-    "mini_jack" BOOLEAN,
+    "jack" BOOLEAN,
     "ir" BOOLEAN,
     "proximity" BOOLEAN,
     "haptic_engine" BOOLEAN,
@@ -225,7 +225,7 @@ CREATE TABLE "smartphones" (
     "hdr_10_plus" BOOLEAN,
     "ppi" INTEGER,
     "display_curved" BOOLEAN,
-    "max_brightness" INTEGER,
+    "brightness_max" INTEGER,
     "multitouch" INTEGER,
     "pwm_frequency" INTEGER,
     "pwm_max_ratio" INTEGER,
@@ -264,7 +264,7 @@ CREATE TABLE "smartphones" (
     "throttling_avg" INTEGER,
     "throttling_min" INTEGER,
     "camera_mark" "camera_mark",
-    "socId" INTEGER NOT NULL,
+    "soc_id" INTEGER NOT NULL,
     "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updated_at" TIMESTAMP(3) NOT NULL,
 
@@ -279,11 +279,11 @@ CREATE TABLE "socs" (
     "series" "soc_series" DEFAULT 'Неизвестно',
     "nanometers" INTEGER,
     "process" TEXT,
-    "gpuId" INTEGER,
     "gpu_frequency" DOUBLE PRECISION,
     "gpu_cores" INTEGER,
     "process_vendor" "process_vendor",
     "link" TEXT,
+    "gpu_id" INTEGER,
     "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updated_at" TIMESTAMP(3) NOT NULL,
 
@@ -342,22 +342,22 @@ CREATE UNIQUE INDEX "_SmartphoneToStore_AB_unique" ON "_SmartphoneToStore"("A", 
 CREATE INDEX "_SmartphoneToStore_B_index" ON "_SmartphoneToStore"("B");
 
 -- AddForeignKey
-ALTER TABLE "cameras_on_smartphones" ADD CONSTRAINT "cameras_on_smartphones_cameraId_fkey" FOREIGN KEY ("cameraId") REFERENCES "cameras"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "cameras_on_smartphones" ADD CONSTRAINT "cameras_on_smartphones_camera_id_fkey" FOREIGN KEY ("camera_id") REFERENCES "cameras"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "cameras_on_smartphones" ADD CONSTRAINT "cameras_on_smartphones_smartphoneId_fkey" FOREIGN KEY ("smartphoneId") REFERENCES "smartphones"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE "cameras_on_smartphones" ADD CONSTRAINT "cameras_on_smartphones_smartphone_id_fkey" FOREIGN KEY ("smartphone_id") REFERENCES "smartphones"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "cores_on_socs" ADD CONSTRAINT "cores_on_socs_coreId_fkey" FOREIGN KEY ("coreId") REFERENCES "cores"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "cores_on_socs" ADD CONSTRAINT "cores_on_socs_core_id_fkey" FOREIGN KEY ("core_id") REFERENCES "cores"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "cores_on_socs" ADD CONSTRAINT "cores_on_socs_socId_fkey" FOREIGN KEY ("socId") REFERENCES "socs"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE "cores_on_socs" ADD CONSTRAINT "cores_on_socs_soc_id_fkey" FOREIGN KEY ("soc_id") REFERENCES "socs"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "smartphones" ADD CONSTRAINT "smartphones_socId_fkey" FOREIGN KEY ("socId") REFERENCES "socs"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "smartphones" ADD CONSTRAINT "smartphones_soc_id_fkey" FOREIGN KEY ("soc_id") REFERENCES "socs"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "socs" ADD CONSTRAINT "socs_gpuId_fkey" FOREIGN KEY ("gpuId") REFERENCES "gpus"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+ALTER TABLE "socs" ADD CONSTRAINT "socs_gpu_id_fkey" FOREIGN KEY ("gpu_id") REFERENCES "gpus"("id") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "_FeatureToSmartphone" ADD CONSTRAINT "_FeatureToSmartphone_A_fkey" FOREIGN KEY ("A") REFERENCES "features"("id") ON DELETE CASCADE ON UPDATE CASCADE;

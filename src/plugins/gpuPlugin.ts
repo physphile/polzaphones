@@ -1,17 +1,19 @@
 import Elysia, { t } from "elysia";
-import { GetQuery, LIMIT, params, type ToSchema } from "./types";
-import { $Enums, type Gpu } from "@prisma/client";
+import { GpuSeries, GpuVendor, type Gpu } from "@prisma/client";
 import { prisma } from "../../prisma";
+import { LIMIT, params, query } from "../constants";
+import type { ToSchema } from "../types";
+import { toPrisma, toQuery } from "../utils";
 
 const endpoint = "/gpu";
 
-export const gpuPartial = t.Partial(
-	t.Object({
-		name: t.String(),
-		series: t.Enum($Enums.GpuSeries),
-		vendor: t.Enum($Enums.GpuVendor),
-	} satisfies ToSchema<Gpu>)
-);
+const gpuSchema = t.Object({
+	name: t.String(),
+	series: t.Enum(GpuSeries),
+	vendor: t.Enum(GpuVendor),
+	link: t.String(),
+} satisfies ToSchema<Gpu>);
+const gpuQuery = t.Object(toQuery(gpuSchema.properties));
 
 export const gpuPlugin = new Elysia({ name: "gpuPlugin", detail: { tags: ["Gpu"] } })
 	.post(
@@ -20,31 +22,11 @@ export const gpuPlugin = new Elysia({ name: "gpuPlugin", detail: { tags: ["Gpu"]
 			prisma.gpu.create({
 				data: body,
 			}),
-		{ body: gpuPartial }
+		{ body: t.Partial(gpuSchema) }
 	)
-	.get(
-		endpoint,
-		({ query: { name, series, vendor, limit = LIMIT, offset, order, orderBy } }) =>
-			prisma.gpu.findMany({
-				orderBy: orderBy
-					? {
-							[orderBy]: order,
-						}
-					: undefined,
-				take: limit,
-				skip: offset,
-				where: {
-					name: {
-						contains: name,
-					},
-					series,
-					vendor,
-				},
-			}),
-		{
-			query: t.Composite([GetQuery, gpuPartial]),
-		}
-	)
+	.get(endpoint, ({ query: { ...query } }) => prisma.gpu.findMany(toPrisma(query, ["link", "series", "vendor"])), {
+		query: t.Partial(t.Composite([query, gpuQuery])),
+	})
 	.get(`${endpoint}/:id`, async ({ params: { id } }) => prisma.gpu.findUniqueOrThrow({ where: { id } }), { params })
 	.patch(
 		`${endpoint}/:id`,
@@ -53,7 +35,7 @@ export const gpuPlugin = new Elysia({ name: "gpuPlugin", detail: { tags: ["Gpu"]
 				where: { id },
 				data: body,
 			}),
-		{ params, body: gpuPartial }
+		{ params, body: t.Partial(gpuSchema) }
 	)
 	.delete(`${endpoint}/:id`, ({ params: { id } }) => prisma.gpu.delete({ where: { id } }), {
 		params,

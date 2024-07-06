@@ -19,8 +19,10 @@ describe("Проверка corePlugin", () => {
 		id = data?.id;
 	});
 	it("Получает все Core", async () => {
-		const { data } = await api.core.get({ query: { orderBy: "created_at", order: "desc" } });
-		expect(data?.findIndex(c => c.id === id)).not.toBe(-1);
+		const { data } = await api.core.get({ query: { order: "desc", orderBy: "createdAt" } });
+		const i = data?.findIndex(c => c.id === id);
+		expect(i).toBeNumber();
+		expect(i).not.toBe(-1);
 	});
 	it("Получает Core по id", async () => {
 		if (!id) return fail();

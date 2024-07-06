@@ -31,8 +31,23 @@ describe("Проверка cameraPlugin", () => {
 		id = data?.id;
 	});
 	it("Получает все Camera", async () => {
-		const { data } = await api.camera.get({ query: { orderBy: "created_at", order: "desc" } });
-		expect(data?.findIndex(c => c.id === id)).not.toBe(-1);
+		const { data } = await api.camera.get({ query: { orderBy: "createdAt", order: "desc" } });
+		const i = data?.findIndex(c => c.id === id);
+		expect(i).toBeNumber();
+		expect(i).not.toBe(-1);
+	});
+	it("Учитывает query-параметры", async () => {
+		const { data } = await api.camera.get({
+			query: {
+				orderBy: "createdAt",
+				order: "desc",
+				name: "Test camera",
+				vendor: "Sony",
+			},
+		});
+		const i = data?.findIndex(c => c.id === id);
+		expect(i).toBeNumber();
+		expect(i).not.toBe(-1);
 	});
 	it("Получает Camera по id", async () => {
 		if (!id) return fail();

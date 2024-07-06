@@ -1,4 +1,4 @@
-import { Elysia, error } from "elysia";
+import { Elysia, error, t } from "elysia";
 import { corePlugin } from "./plugins/corePlugin";
 import {
 	PrismaClientInitializationError,

@@ -30,7 +30,7 @@ model Smartphone {
   romSize                   Int?                 @map("rom_size")
   romType                   RomType?             @map("rom_type")
   sound                     Sound?
-  miniJack                  Boolean?             @map("mini_jack")
+  jack                      Boolean?             @map("jack")
   ir                        Boolean?
   proximity                 Boolean?
   hapticEngine              Boolean?             @map("haptic_engine")
@@ -56,7 +56,7 @@ model Smartphone {
   hdr10Plus                 Boolean?             @map("hdr_10_plus")
   ppi                       Int?
   displayCurved             Boolean?             @map("display_curved")
-  maxBrightness             Int?                 @map("max_brightness")
+  brightnessMax             Int?                 @map("brightness_max")
   multitouch                Int?
   pwmFrequency              Int?                 @map("pwm_frequency")
   pwmMaxRatio               Int?                 @map("pwm_max_ratio")

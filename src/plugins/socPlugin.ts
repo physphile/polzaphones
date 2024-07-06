@@ -1,37 +1,31 @@
 import Elysia, { t } from "elysia";
-import { GetQuery, LIMIT, minMax, params, toRange } from "./types";
-import { $Enums } from "@prisma/client";
+import { ProcessVendor, SocSeries, SocVendor } from "@prisma/client";
 import { prisma } from "../../prisma";
+import { params, query, URL_PATTERN } from "../constants";
+import { toQuery, toPrisma } from "../utils";
 
 const endpoint = "/soc";
 
-const socPartial = t.Partial(
-	t.Object({
-		name: t.String(),
-		vendor: t.Enum($Enums.SocVendor),
-		processVendor: t.Enum($Enums.ProcessVendor),
-		gpuCores: t.Numeric(),
-		gpuFrequency: t.Numeric(),
-		nanometers: t.Numeric(),
-		process: t.String(),
-		cores: t.Array(
-			t.Object({
-				id: t.Numeric(),
-				frequency: t.Numeric(),
-				number: t.Numeric(),
-			})
-		),
-		gpu: t.Numeric(),
-	})
-);
-const socQuery = t.Composite([
-	t.Omit(socPartial, ["gpuCores", "gpuFrequency", "nanometers"]),
-	t.Object({
-		gpuCores: minMax,
-		gpuFrequency: minMax,
-		nanometers: minMax,
-	}),
-]);
+const socSchema = t.Object({
+	name: t.String(),
+	vendor: t.Enum(SocVendor),
+	processVendor: t.Enum(ProcessVendor),
+	gpuCores: t.Integer(),
+	gpuFrequency: t.Integer(),
+	nanometers: t.Integer(),
+	process: t.String(),
+	cores: t.Array(
+		t.Object({
+			id: t.Integer(),
+			frequency: t.Integer(),
+			number: t.Integer(),
+		})
+	),
+	gpu: t.Integer(),
+	series: t.Enum(SocSeries),
+	link: t.String({ pattern: URL_PATTERN }),
+});
+const socQuery = t.Partial(t.Object(toQuery(socSchema.properties, ["gpu"])));
 
 export const socPlugin = new Elysia({ name: "socPlugin", detail: { tags: ["Soc"] } })
 	.post(
@@ -62,39 +56,20 @@ export const socPlugin = new Elysia({ name: "socPlugin", detail: { tags: ["Soc"]
 										number: c.number,
 										coreId: c.id,
 									})),
-								}
+							  }
 							: undefined,
 					},
 				},
 			});
 		},
-		{ body: socPartial }
+		{ body: t.Partial(socSchema) }
 	)
 	.get(
 		endpoint,
-		({ query: { name, vendor, gpuCores, gpuFrequency, nanometers, process, processVendor, limit = LIMIT, offset, order, orderBy } }) =>
-			prisma.soc.findMany({
-				orderBy: orderBy
-					? {
-							[orderBy]: order,
-						}
-					: undefined,
-				take: limit,
-				skip: offset,
-				where: {
-					name: {
-						contains: name,
-					},
-					vendor,
-					gpuCores: toRange(gpuCores),
-					gpuFrequency: toRange(gpuFrequency),
-					nanometers: toRange(nanometers),
-					process,
-					processVendor,
-				},
-			}),
+		({ query: { cores, ...query } }) =>
+			prisma.soc.findMany(toPrisma(query, ["gpu", "vendor", "processVendor", "process", "series", "link"])),
 		{
-			query: t.Composite([GetQuery, socQuery]),
+			query: t.Partial(t.Composite([query, socQuery])),
 		}
 	)
 	.get(
@@ -134,13 +109,13 @@ export const socPlugin = new Elysia({ name: "socPlugin", detail: { tags: ["Soc"]
 										coreId: c.id,
 									})),
 									skipDuplicates: true,
-								}
+							  }
 							: undefined,
 					},
 				},
 			});
 		},
-		{ params, body: socPartial }
+		{ params, body: t.Partial(socSchema) }
 	)
 	.delete(`${endpoint}/:id`, ({ params: { id } }) => prisma.soc.delete({ where: { id } }), {
 		params,
