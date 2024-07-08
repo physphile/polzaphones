@@ -1,10 +1,11 @@
 model Store {
   id Int @id @default(autoincrement())
 
-  name String @unique
-  link String
+  name     String  @unique
+  link     String? @unique
+  priority Int?    @unique
 
-  smartphones Smartphone[]
+  smartphones StoresOnSmartphones[]
 
   @@map("stores")
 }

@@ -8,9 +8,6 @@ model CoresOnSocs {
   number    Int?
   frequency Int?
 
-  createdAt DateTime @default(now()) @map("created_at")
-  updatedAt DateTime @updatedAt @map("updated_at")
-
   @@id([coreId, socId])
   @@map("cores_on_socs")
 }

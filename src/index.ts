@@ -11,6 +11,7 @@ import { gpuPlugin } from "./plugins/gpuPlugin";
 import { socPlugin } from "./plugins/socPlugin";
 import { cameraPlugin } from "./plugins/cameraPlugin";
 import swagger from "@elysiajs/swagger";
+import { smartphonePlugin } from "./plugins/smartphonePlugin";
 
 const port = 3000;
 
@@ -64,4 +65,5 @@ export const app = new Elysia()
 	.use(gpuPlugin)
 	.use(socPlugin)
 	.use(cameraPlugin)
+	.use(smartphonePlugin)
 	.listen(port, () => console.log(`Bun is listening port ${port}`));

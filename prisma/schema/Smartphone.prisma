@@ -99,10 +99,10 @@ model Smartphone {
   releaseDate               String?              @map("release_date")
 
   cameras  CamerasOnSmartphones[]
-  soc      Soc                    @relation(fields: [socId], references: [id])
-  socId    Int                    @map("soc_id")
-  stores   Store[]
-  features Feature[]
+  soc      Soc                     @relation(fields: [socId], references: [id])
+  socId    Int                     @map("soc_id")
+  stores   StoresOnSmartphones[]
+  features FeaturesOnSmartphones[]
 
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")

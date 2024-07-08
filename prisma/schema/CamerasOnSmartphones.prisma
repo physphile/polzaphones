@@ -18,9 +18,6 @@ model CamerasOnSmartphones {
   autofocus          Boolean?
   minFocusDistance   Int?             @map("min_focus_distance")
 
-  createdAt DateTime @default(now()) @map("created_at")
-  updatedAt DateTime @updatedAt @map("updated_at")
-
   @@id([cameraId, smartphoneId])
   @@map("cameras_on_smartphones")
 }

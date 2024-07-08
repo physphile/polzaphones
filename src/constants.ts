@@ -1,6 +1,6 @@
 import { t } from "elysia";
 
-export const query = t.Object({
+export const pageQuery = t.Object({
 	limit: t.Numeric(),
 	offset: t.Numeric(),
 	orderBy: t.String(),

@@ -93,6 +93,7 @@ CREATE TABLE "cameras" (
     "pixel_size" DOUBLE PRECISION,
     "binning" INTEGER,
     "link" TEXT,
+    "release_date" TEXT,
     "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updated_at" TIMESTAMP(3) NOT NULL,
 
@@ -115,8 +116,6 @@ CREATE TABLE "cameras_on_smartphones" (
     "fov" INTEGER,
     "autofocus" BOOLEAN,
     "min_focus_distance" INTEGER,
-    "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "updated_at" TIMESTAMP(3) NOT NULL,
 
     CONSTRAINT "cameras_on_smartphones_pkey" PRIMARY KEY ("camera_id","smartphone_id")
 );
@@ -128,6 +127,7 @@ CREATE TABLE "cores" (
     "series" "core_series" DEFAULT 'Неизвестно',
     "name" TEXT DEFAULT '',
     "link" TEXT,
+    "release_date" TEXT,
     "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updated_at" TIMESTAMP(3) NOT NULL,
 
@@ -140,8 +140,6 @@ CREATE TABLE "cores_on_socs" (
     "soc_id" INTEGER NOT NULL,
     "number" INTEGER,
     "frequency" INTEGER,
-    "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "updated_at" TIMESTAMP(3) NOT NULL,
 
     CONSTRAINT "cores_on_socs_pkey" PRIMARY KEY ("core_id","soc_id")
 );
@@ -155,12 +153,21 @@ CREATE TABLE "features" (
 );
 
 -- CreateTable
+CREATE TABLE "features_on_smartphones" (
+    "smartphone_id" INTEGER NOT NULL,
+    "feature_id" INTEGER NOT NULL,
+
+    CONSTRAINT "features_on_smartphones_pkey" PRIMARY KEY ("smartphone_id","feature_id")
+);
+
+-- CreateTable
 CREATE TABLE "gpus" (
     "id" SERIAL NOT NULL,
     "vendor" "gpu_vendor" DEFAULT 'Неизвестно',
     "series" "gpu_series" DEFAULT 'Неизвестно',
     "name" TEXT DEFAULT '',
     "link" TEXT,
+    "release_date" TEXT,
     "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updated_at" TIMESTAMP(3) NOT NULL,
 
@@ -258,12 +265,14 @@ CREATE TABLE "smartphones" (
     "geekbench_multi" INTEGER,
     "geekbench_gpu" INTEGER,
     "antutu" INTEGER,
-    "reverse_charging" BOOLEAN,
-    "wireless_charging" BOOLEAN,
+    "charge_power" INTEGER,
+    "reverse_charge_power" INTEGER,
+    "wireless_charge_power" INTEGER,
     "throttling_max" INTEGER,
     "throttling_avg" INTEGER,
     "throttling_min" INTEGER,
     "camera_mark" "camera_mark",
+    "release_date" TEXT,
     "soc_id" INTEGER NOT NULL,
     "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updated_at" TIMESTAMP(3) NOT NULL,
@@ -283,6 +292,7 @@ CREATE TABLE "socs" (
     "gpu_cores" INTEGER,
     "process_vendor" "process_vendor",
     "link" TEXT,
+    "release_date" TEXT,
     "gpu_id" INTEGER,
     "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updated_at" TIMESTAMP(3) NOT NULL,
@@ -294,21 +304,19 @@ CREATE TABLE "socs" (
 CREATE TABLE "stores" (
     "id" SERIAL NOT NULL,
     "name" TEXT NOT NULL,
-    "link" TEXT NOT NULL,
+    "link" TEXT,
+    "priority" INTEGER,
 
     CONSTRAINT "stores_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
-CREATE TABLE "_FeatureToSmartphone" (
-    "A" INTEGER NOT NULL,
-    "B" INTEGER NOT NULL
-);
+CREATE TABLE "stores_on_smartphones" (
+    "smartphone_id" INTEGER NOT NULL,
+    "store_id" INTEGER NOT NULL,
+    "link" TEXT NOT NULL,
 
--- CreateTable
-CREATE TABLE "_SmartphoneToStore" (
-    "A" INTEGER NOT NULL,
-    "B" INTEGER NOT NULL
+    CONSTRAINT "stores_on_smartphones_pkey" PRIMARY KEY ("smartphone_id","store_id")
 );
 
 -- CreateIndex
@@ -316,6 +324,9 @@ CREATE UNIQUE INDEX "cameras_vendor_name_key" ON "cameras"("vendor", "name");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "cores_vendor_series_name_key" ON "cores"("vendor", "series", "name");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "features_name_key" ON "features"("name");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "gpus_vendor_series_name_key" ON "gpus"("vendor", "series", "name");
@@ -330,16 +341,10 @@ CREATE UNIQUE INDEX "socs_name_vendor_series_key" ON "socs"("name", "vendor", "s
 CREATE UNIQUE INDEX "stores_name_key" ON "stores"("name");
 
 -- CreateIndex
-CREATE UNIQUE INDEX "_FeatureToSmartphone_AB_unique" ON "_FeatureToSmartphone"("A", "B");
+CREATE UNIQUE INDEX "stores_link_key" ON "stores"("link");
 
 -- CreateIndex
-CREATE INDEX "_FeatureToSmartphone_B_index" ON "_FeatureToSmartphone"("B");
-
--- CreateIndex
-CREATE UNIQUE INDEX "_SmartphoneToStore_AB_unique" ON "_SmartphoneToStore"("A", "B");
-
--- CreateIndex
-CREATE INDEX "_SmartphoneToStore_B_index" ON "_SmartphoneToStore"("B");
+CREATE UNIQUE INDEX "stores_priority_key" ON "stores"("priority");
 
 -- AddForeignKey
 ALTER TABLE "cameras_on_smartphones" ADD CONSTRAINT "cameras_on_smartphones_camera_id_fkey" FOREIGN KEY ("camera_id") REFERENCES "cameras"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
@@ -354,19 +359,19 @@ ALTER TABLE "cores_on_socs" ADD CONSTRAINT "cores_on_socs_core_id_fkey" FOREIGN 
 ALTER TABLE "cores_on_socs" ADD CONSTRAINT "cores_on_socs_soc_id_fkey" FOREIGN KEY ("soc_id") REFERENCES "socs"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
+ALTER TABLE "features_on_smartphones" ADD CONSTRAINT "features_on_smartphones_smartphone_id_fkey" FOREIGN KEY ("smartphone_id") REFERENCES "smartphones"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "features_on_smartphones" ADD CONSTRAINT "features_on_smartphones_feature_id_fkey" FOREIGN KEY ("feature_id") REFERENCES "features"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
 ALTER TABLE "smartphones" ADD CONSTRAINT "smartphones_soc_id_fkey" FOREIGN KEY ("soc_id") REFERENCES "socs"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "socs" ADD CONSTRAINT "socs_gpu_id_fkey" FOREIGN KEY ("gpu_id") REFERENCES "gpus"("id") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "_FeatureToSmartphone" ADD CONSTRAINT "_FeatureToSmartphone_A_fkey" FOREIGN KEY ("A") REFERENCES "features"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE "stores_on_smartphones" ADD CONSTRAINT "stores_on_smartphones_smartphone_id_fkey" FOREIGN KEY ("smartphone_id") REFERENCES "smartphones"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "_FeatureToSmartphone" ADD CONSTRAINT "_FeatureToSmartphone_B_fkey" FOREIGN KEY ("B") REFERENCES "smartphones"("id") ON DELETE CASCADE ON UPDATE CASCADE;
-
--- AddForeignKey
-ALTER TABLE "_SmartphoneToStore" ADD CONSTRAINT "_SmartphoneToStore_A_fkey" FOREIGN KEY ("A") REFERENCES "smartphones"("id") ON DELETE CASCADE ON UPDATE CASCADE;
-
--- AddForeignKey
-ALTER TABLE "_SmartphoneToStore" ADD CONSTRAINT "_SmartphoneToStore_B_fkey" FOREIGN KEY ("B") REFERENCES "stores"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE "stores_on_smartphones" ADD CONSTRAINT "stores_on_smartphones_store_id_fkey" FOREIGN KEY ("store_id") REFERENCES "stores"("id") ON DELETE RESTRICT ON UPDATE CASCADE;

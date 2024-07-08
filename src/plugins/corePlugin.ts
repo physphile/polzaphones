@@ -1,6 +1,6 @@
 import Elysia, { t } from "elysia";
 import { prisma } from "../../prisma";
-import { params, query } from "../constants";
+import { params, pageQuery } from "../constants";
 import { toPrisma, toQuery } from "../utils";
 import { coreSchema } from "./schemas/core";
 
@@ -17,10 +17,19 @@ export const corePlugin = new Elysia({ name: "corePlugin", detail: { tags: ["Cor
 			}),
 		{ body: t.Partial(coreSchema) }
 	)
-	.get(endpoint, ({ query: { ...query } }) => prisma.core.findMany(toPrisma(query, ["link", "series", "vendor"])), {
-		query: t.Partial(t.Composite([query, coreQuery])),
-	})
-	.get(`${endpoint}/:id`, async ({ params: { id } }) => prisma.core.findUniqueOrThrow({ where: { id } }), { params })
+	.get(
+		endpoint,
+		({ query: { ...query } }) =>
+			prisma.core.findMany(toPrisma(query, ["link", "series", "vendor"])),
+		{
+			query: t.Partial(t.Composite([pageQuery, coreQuery])),
+		}
+	)
+	.get(
+		`${endpoint}/:id`,
+		({ params: { id } }) => prisma.core.findUniqueOrThrow({ where: { id } }),
+		{ params }
+	)
 	.patch(
 		`${endpoint}/:id`,
 		({ params: { id }, body: { ...body } }) =>

@@ -1,0 +1,10 @@
+model FeaturesOnSmartphones {
+  smartphoneId Int @map("smartphone_id")
+  featureId    Int @map("feature_id")
+
+  smartphone Smartphone @relation(fields: [smartphoneId], references: [id], onDelete: Cascade)
+  feature    Feature    @relation(fields: [featureId], references: [id], onDelete: Restrict)
+
+  @@id([smartphoneId, featureId])
+  @@map("features_on_smartphones")
+}

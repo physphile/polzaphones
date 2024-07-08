@@ -14,7 +14,10 @@ import {
 	Sound,
 	UsbVersion,
 	WiFi,
-	type Smartphone,
+	VideoResolution,
+	CameraPosition,
+	Stabilization,
+	CameraType,
 } from "@prisma/client";
 import { t } from "elysia";
 import { HEX_PATTERN, URL_PATTERN, DATE_PATTERN } from "../../constants";
@@ -117,4 +120,29 @@ export const smartphoneSchema = t.Object({
 	wirelessChargePower: t.Integer(),
 	workbench: t.Integer(),
 	releaseDate: t.String({ pattern: DATE_PATTERN }),
-} satisfies ToSchema<Smartphone>);
+	cameras: t.Array(
+		t.Object({
+			id: t.Integer(),
+			autofocus: t.Boolean(),
+			focal: t.Integer(),
+			fov: t.Integer(),
+			laf: t.Boolean(),
+			maxAperture: t.Number(),
+			maxVideoFramerate: t.Integer(),
+			maxVideoResolution: t.Enum(VideoResolution),
+			minAperture: t.Integer(),
+			minFocusDistance: t.Integer(),
+			position: t.Enum(CameraPosition),
+			stabilization: t.Enum(Stabilization),
+			type: t.Enum(CameraType),
+		})
+	),
+	soc: t.Integer(),
+	features: t.Array(t.String()),
+	stores: t.Array(
+		t.Object({
+			name: t.String(),
+			link: t.String({ pattern: URL_PATTERN }),
+		})
+	),
+});

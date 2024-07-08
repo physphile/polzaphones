@@ -1,6 +1,6 @@
 import Elysia, { t } from "elysia";
 import { prisma } from "../../prisma";
-import { params, query } from "../constants";
+import { params, pageQuery } from "../constants";
 import { toPrisma, toQuery } from "../utils";
 import { gpuSchema } from "./schemas/gpu";
 
@@ -17,10 +17,16 @@ export const gpuPlugin = new Elysia({ name: "gpuPlugin", detail: { tags: ["Gpu"]
 			}),
 		{ body: t.Partial(gpuSchema) }
 	)
-	.get(endpoint, ({ query: { ...query } }) => prisma.gpu.findMany(toPrisma(query, ["link", "series", "vendor"])), {
-		query: t.Partial(t.Composite([query, gpuQuery])),
+	.get(
+		endpoint,
+		({ query: { ...query } }) => prisma.gpu.findMany(toPrisma(query, ["link", "series", "vendor"])),
+		{
+			query: t.Partial(t.Composite([pageQuery, gpuQuery])),
+		}
+	)
+	.get(`${endpoint}/:id`, ({ params: { id } }) => prisma.gpu.findUniqueOrThrow({ where: { id } }), {
+		params,
 	})
-	.get(`${endpoint}/:id`, async ({ params: { id } }) => prisma.gpu.findUniqueOrThrow({ where: { id } }), { params })
 	.patch(
 		`${endpoint}/:id`,
 		({ params: { id }, body: { ...body } }) =>

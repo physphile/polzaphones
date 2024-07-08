@@ -1,0 +1,12 @@
+model StoresOnSmartphones {
+  smartphoneId Int @map("smartphone_id")
+  storeId      Int @map("store_id")
+
+  smartphone Smartphone @relation(fields: [smartphoneId], references: [id])
+  store      Store      @relation(fields: [storeId], references: [id])
+
+  link String
+
+  @@id([smartphoneId, storeId])
+  @@map("stores_on_smartphones")
+}
